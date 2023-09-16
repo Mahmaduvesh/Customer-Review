@@ -205,7 +205,7 @@ export default App;
 
 #### Confirm Box With Delete Review
 
-![App Screenshot](/images/8.png)
+![App Screenshot](/images/6.png)
 
 #### After Delete Reviews
 
