@@ -1,71 +1,249 @@
-# Getting Started with Create React App
+# Test Task By Knovator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🤩 Features
+There should be two sections
 
-## Available Scripts
+- Give Review
+- Reviews
 
-In the project directory, you can run:
+## ⭐ Give Review
 
-### `npm start`
+#### - It shows a form for the user to give a review.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### - Form Includes two input ﬁelds,
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```http
+  - Title* ⇒ Title of the Review.
+  - Rating* ⇒ Rating for the Review.
+  - Description ⇒ Description of the Review.
+```
 
-### `npm test`
+#### - Form Includes two buttons,
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```http
+  - Submit ⇒ submit the review and clear the form.
+  - Reset ⇒ reset the review and clear the form.
+```
 
-### `npm run build`
+- Title* and Rating* are required ﬁelds.
+- When a user submits the review, the review should be added to the Reviews section.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ✨ Reviews
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### - Should show a list of reviews the user has added.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### - List should show Title, Description & Rating that user has added.
 
-### `npm run eject`
+## ✴ Plus Points
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### - You can add the Delete button on review.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### - When a user clicks on the delete button review should be removed from list.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Usage/Examples
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```javascript
+import { useState } from "react";
+import { Container, Form, Button, Table } from "react-bootstrap";
 
-## Learn More
+function App() {
+  const [title, setTitle] = useState("");
+  const [rating, setRating] = useState("");
+  const [description, setDescription] = useState("");
+  const [formData, setFormData] = useState([]);
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  const removeData = (removeIndexValue) => {
+    console.log(removeIndexValue);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    const tempdata = formData.filter((value, index) => {
+      if (removeIndexValue != index) {
+        return value;
+      }
+    });
 
-### Code Splitting
+    setFormData(tempdata);
+  };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  return (
+    <Container>
+      <Container className="mt-5">
+        <h2 className="mb-3">Customer Review</h2>
+        <Form
+          action="#"
+          onSubmit={(e) => {
+            e.preventDefault();
 
-### Analyzing the Bundle Size
+            var tempData = {
+              title,
+              rating,
+              description,
+            };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+            // spread operator Before
+            // const arr = [1,2,3];
+            // const backuparr = [arr,4,5,6] => [[1,2,3],4,5,6]
+            // const spreadarr = [...arr,4,5,6] => [1,2,3,4,5,6]
+            setFormData([...formData, tempData]);
 
-### Making a Progressive Web App
+            setTitle("");
+            setRating("");
+            setDescription("");
+          }}
+        >
+          <Form.Group className="mb-3" controlId="formtitle">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter title"
+              required
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              value={title}
+            />
+          </Form.Group>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+          <Form.Group className="mb-3" controlId="formratings">
+            <Form.Label>Rating</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter rating"
+              required
+              onChange={(e) => {
+                setRating(e.target.value);
+              }}
+              value={rating}
+            />
+          </Form.Group>
 
-### Advanced Configuration
+          <Form.Group className="mb-3" controlId="formdescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter description"
+              as="textarea"
+              style={{ height: "100px" }}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              value={description}
+            />
+          </Form.Group>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+          <Button
+            variant="primary"
+            type="submit"
+            style={{ marginRight: "10px" }}
+          >
+            Submit
+          </Button>
 
-### Deployment
+          <Button variant="primary" type="reset">
+            Reset
+          </Button>
+        </Form>
+      </Container>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+      <Container className="mt-5">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Title</th>
+              <th>Rating</th>
+              <th>Description</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {formData.map((value, i) => {
+              return (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{value.title}</td>
+                  <td>{value.rating}</td>
+                  <td>{value.description}</td>
+                  <td>
+                    <Button variant="danger" onClick={() => removeData(i)}>
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Container>
+    </Container>
+  );
+}
 
-### `npm run build` fails to minify
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# Customer-Review" 
+## Task Screenshots
+
+#### Basic Ui
+
+![App Screenshot](/images/1.png)
+
+#### Fill Form Data
+
+![App Screenshot](/images/2.png)
+
+#### After Submit
+
+![App Screenshot](/images/3.png)
+
+#### Added More Reviews
+
+![App Screenshot](/images/4.png)
+
+#### List Out All Reviews
+
+![App Screenshot](/images/5.png)
+
+#### Confirm Box With Delete Review
+
+![App Screenshot](/images/8.png)
+
+#### After Delete Reviews
+
+![App Screenshot](/images/7.png)
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Mahmaduvesh/Test-Task-By-Knovator.git
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+## 🛠 Skills
+
+HTML, CSS, Javascript, Bootstrap, React Js...
+
+## 🔗 Links
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://mahmaduvesh-portfolio.netlify.app/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](http://www.linkedin.com/in/mahmaduvesh-khalifa-b48ba41a0)
+
+# Thank You :)

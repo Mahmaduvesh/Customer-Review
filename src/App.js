@@ -7,12 +7,18 @@ function App() {
   const [description, setDescription] = useState("");
   const [formData, setFormData] = useState([]);
 
-  const removeData = (removeIndexValue) => {
-    console.log(removeIndexValue);
+  const removeData = (indexNumber) => {
+    const isConfirm = window.confirm(
+      `Are You Sure To Delete ${indexNumber + 1} Review ?`
+    );
 
-    const tempdata = formData.filter((value, index) => {
-      if (removeIndexValue != index) {
-        return value;
+    if (!isConfirm) {
+      return;
+    }
+
+    const tempdata = formData.filter((ls, i) => {
+      if (i != indexNumber) {
+        return ls;
       }
     });
 
@@ -21,8 +27,8 @@ function App() {
 
   return (
     <Container>
-      <Container className="mt-5">
-        <h2 className="mb-3">Customer Review</h2>
+      <Container className="container my-5 card p-3 shadow">
+        <h2 className="mb-3">Give Customer Review</h2>
         <Form
           action="#"
           onSubmit={(e) => {
@@ -99,7 +105,7 @@ function App() {
         </Form>
       </Container>
 
-      <Container className="mt-5">
+      <Container className="container my-5 card p-3 shadow">
         <Table striped bordered hover>
           <thead>
             <tr>
